@@ -50,12 +50,18 @@ const UrlComponent = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", focusField);
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "k") {
+        focusField(e);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeydown);
 
     return () => {
-      window.removeEventListener("keydown", focusField);
+      window.removeEventListener("keydown", handleKeydown);
     };
-  });
+  }, []);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
