@@ -50,7 +50,7 @@ export async function POST(req: Request) {
   urlGraph.set(shortId, { originalUrl: validatedUrl, creationTime });
 
   return NextResponse.json({
-    shortUrl: `http://localhost:3000/api/${shortId}`,
+    shortUrl: `${process.env.NEXT_LIVE_URL}/api/${shortId}`,
   });
 }
 

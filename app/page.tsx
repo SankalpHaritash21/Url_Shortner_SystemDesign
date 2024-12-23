@@ -14,7 +14,7 @@ const App = () => {
     e.preventDefault();
     try {
       const response = await axios.post<ShortenResponse>(
-        "http://localhost:3000/api/shorten",
+        `${process.env.NEXT_LIVE_URL}/api/shorten`,
         {
           originalUrl,
         }
