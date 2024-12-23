@@ -1,16 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 const UrlComponent = () => {
-  const [originalUrl, setOriginalUrl] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [shortUrl, setShortUrl] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
   const url = "https://url-shortner-system-design.vercel.app";
   // process.env.NEXT_PUBLIC_API_URL || "https://url-shortner-system-design.vercel.app/";
 
   interface ShortenResponse {
     shortUrl: string;
   }
+
+  const focusField = (e: KeyboardEvent) => {
+    e.preventDefault();
+
+    if (e.ctrlKey && e.key === "k") {
+      searchInputRef.current?.focus();
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +36,13 @@ const UrlComponent = () => {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("keydown", focusField);
+
+    return () => {
+      window.removeEventListener("keydown", focusField);
+    };
+  });
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
       <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">
@@ -35,6 +51,7 @@ const UrlComponent = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="url"
+          ref={searchInputRef}
           placeholder="Enter your long URL"
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
           value={originalUrl}
