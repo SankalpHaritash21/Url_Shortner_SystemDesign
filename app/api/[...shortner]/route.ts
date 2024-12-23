@@ -7,7 +7,7 @@ type UrlData = {
 };
 
 const urlGraph = new Map<string, UrlData>();
-const url = "https://url-shortner-system-design.vercel.app"; //"http://localhost:3000"; // || "/";
+const baseUrl = "http://localhost:3000"; //"https://url-shortner-system-design.vercel.app";
 let numberOfRequests: { [key: string]: number } = {};
 
 // Reset rate-limiting data every second
@@ -26,32 +26,42 @@ export async function POST(req: Request) {
     );
   }
 
-  // Add http:// if not present
-  let validatedUrl = originalUrl;
-  if (!/^https?:\/\//i.test(originalUrl)) {
-    validatedUrl = `http://${originalUrl}`;
+  // Check if URL is valid using the URL constructor
+  let validatedUrl: URL;
+  try {
+    validatedUrl = new URL(originalUrl);
+  } catch {
+    return NextResponse.json(
+      { message: "Invalid URL format" },
+      { status: 400 }
+    );
+  }
+
+  // Ensure the URL has http:// or https://
+  if (!/^https?:\/\//i.test(validatedUrl.href)) {
+    validatedUrl = new URL(`http://${originalUrl}`);
   }
 
   // Rate limiting
-  if (numberOfRequests[validatedUrl]) {
-    if (numberOfRequests[validatedUrl] >= 5) {
+  if (numberOfRequests[validatedUrl.href]) {
+    if (numberOfRequests[validatedUrl.href] >= 5) {
       return NextResponse.json(
         { message: "Too many requests. Try again later." },
         { status: 429 }
       );
     }
-    numberOfRequests[validatedUrl]++;
+    numberOfRequests[validatedUrl.href]++;
   } else {
-    numberOfRequests[validatedUrl] = 1;
+    numberOfRequests[validatedUrl.href] = 1;
   }
 
   // Generate a unique short ID
   const shortId = nanoid(6);
   const creationTime = Date.now();
-  urlGraph.set(shortId, { originalUrl: validatedUrl, creationTime });
+  urlGraph.set(shortId, { originalUrl: validatedUrl.href, creationTime });
 
   return NextResponse.json({
-    shortUrl: `${url}/api/${shortId}`,
+    shortUrl: `${baseUrl}/api/${shortId}`,
   });
 }
 
