@@ -5,7 +5,9 @@ import axios from "axios";
 const App = () => {
   const [originalUrl, setOriginalUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://url-shortner-system-design.vercel.app/";
 
   interface ShortenResponse {
     shortUrl: string;
