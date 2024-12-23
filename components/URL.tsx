@@ -8,7 +8,7 @@ const UrlComponent = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [originalUrl, setOriginalUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
-  const url = "http://localhost:3000"; // "https://url-shortner-system-design.vercel.app";
+  const url = "https://url-shortner-system-design.vercel.app"; //"http://localhost:3000"
 
   interface ShortenResponse {
     shortUrl: string;
