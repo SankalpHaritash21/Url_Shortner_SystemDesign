@@ -7,6 +7,7 @@ type UrlData = {
 };
 
 const urlGraph = new Map<string, UrlData>();
+const url = process.env.PUBLIC_VAR;
 let numberOfRequests: { [key: string]: number } = {};
 
 // Reset rate-limiting data every second
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
   urlGraph.set(shortId, { originalUrl: validatedUrl, creationTime });
 
   return NextResponse.json({
-    shortUrl: `${process.env.NEXT_LIVE_URL}/api/${shortId}`,
+    shortUrl: `${url}/api/${shortId}`,
   });
 }
 

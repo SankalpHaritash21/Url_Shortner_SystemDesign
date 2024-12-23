@@ -5,6 +5,7 @@ import axios from "axios";
 const App = () => {
   const [originalUrl, setOriginalUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   interface ShortenResponse {
     shortUrl: string;
@@ -14,7 +15,7 @@ const App = () => {
     e.preventDefault();
     try {
       const response = await axios.post<ShortenResponse>(
-        `${process.env.NEXT_LIVE_URL}/api/shorten`,
+        `${url}/api/shortner`,
         {
           originalUrl,
         }
