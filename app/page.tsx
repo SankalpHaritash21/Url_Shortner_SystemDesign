@@ -1,68 +1,50 @@
 "use client";
-import React, { useState } from "react";
-import axios from "axios";
 
-const App = () => {
-  const [originalUrl, setOriginalUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("");
-  const url = "https://url-shortner-system-design.vercel.app";
-  // process.env.NEXT_PUBLIC_API_URL || "https://url-shortner-system-design.vercel.app/";
+import React from "react";
+import { motion } from "framer-motion";
+import UrlComponent from "@/components/URL";
 
-  interface ShortenResponse {
-    shortUrl: string;
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post<ShortenResponse>(
-        `${url}/api/shortner`,
-        {
-          originalUrl,
-        }
-      );
-      setShortUrl(response.data.shortUrl);
-    } catch (error) {
-      console.error("Error creating short URL", error);
-    }
-  };
-
+const HomePage = () => {
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="bg-gray-600 p-8 rounded shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-gray-700">URL Shortener</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="url"
-            placeholder="Enter your URL"
-            className="w-full p-2 border border-gray-300 text-black rounded mb-4"
-            value={originalUrl}
-            onChange={(e) => setOriginalUrl(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          >
-            Shorten URL
-          </button>
-        </form>
-        {shortUrl && (
-          <div className="mt-4">
-            <p className="text-gray-700">Shortened URL:</p>
-            <a
-              href={shortUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              {shortUrl}
-            </a>
-          </div>
-        )}
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-gray-900 text-white flex flex-col items-center justify-center px-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="text-center"
+      >
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+          Welcome to <span className="text-blue-400">URL Shortener</span>
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300">
+          Shorten your long URLs and share them easily with the world!
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="mt-10 w-full max-w-lg"
+      >
+        <UrlComponent />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1 }}
+        className="mt-16"
+      >
+        <p className="text-gray-400">
+          Built with ❤️ by{" "}
+          <a href="#" className="text-blue-400 hover:underline">
+            Sankalp Haritash
+          </a>
+        </p>
+      </motion.div>
     </div>
   );
 };
 
-export default App;
+export default HomePage;
