@@ -9,7 +9,7 @@ const UrlComponent = () => {
   const [originalUrl, setOriginalUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const p = true;
-  const url = !p
+  const url = p
     ? "https://url-shortner-system-design.vercel.app"
     : "http://localhost:3000";
 

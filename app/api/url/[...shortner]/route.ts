@@ -8,7 +8,7 @@ type UrlData = {
 
 const urlGraph = new Map<string, UrlData>();
 const p = true;
-const baseUrl = !p
+const baseUrl = p
   ? "https://url-shortner-system-design.vercel.app/api/url"
   : "http://localhost:3000/api/url";
 let numberOfRequests: { [key: string]: number } = {};
