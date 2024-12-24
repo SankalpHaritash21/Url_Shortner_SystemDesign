@@ -13,9 +13,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  env: {
-    PUBLIC_VAR: process.env.NEXT_LIVE_URL,
-  },
 };
 
 export default nextConfig;
