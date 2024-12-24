@@ -25,7 +25,7 @@ const UrlComponent = () => {
     e.preventDefault();
     try {
       const response = await axios.post<ShortenResponse>(
-        `${url}/api/shortner`,
+        `${url}/api/url/shortner`,
         {
           originalUrl,
         }
