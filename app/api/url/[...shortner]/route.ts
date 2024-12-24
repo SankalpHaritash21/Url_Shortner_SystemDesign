@@ -5,7 +5,7 @@ import { LIVE_URL } from "@/constant/constant";
 
 const urlGraph = new Map<string, UrlData>();
 const Url = LIVE_URL;
-console.log("url server:", Url);
+
 const baseUrl = `${Url}/api/url`;
 
 let numberOfRequests: { [key: string]: number } = {};
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   urlGraph.set(shortId, { originalUrl: validatedUrl.href, creationTime });
 
   return NextResponse.json({
-    shortUrl: `${baseUrl}/api/${shortId}`,
+    shortUrl: `${baseUrl}api/${shortId}`,
   });
 }
 
