@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   urlGraph.set(shortId, { originalUrl: validatedUrl.href, creationTime });
 
   return NextResponse.json({
-    shortUrl: `${baseUrl}api/${shortId}`,
+    shortUrl: `${baseUrl}/api/${shortId}`,
   });
 }
 
