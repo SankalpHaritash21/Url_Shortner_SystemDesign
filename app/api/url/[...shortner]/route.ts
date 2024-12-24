@@ -1,16 +1,13 @@
 import { nanoid } from "nanoid";
+import { UrlData } from "@/type";
 import { NextResponse } from "next/server";
-
-type UrlData = {
-  originalUrl: string;
-  creationTime: number;
-};
+import { LIVE_URL } from "@/constant/constant";
 
 const urlGraph = new Map<string, UrlData>();
-const p = true;
-const baseUrl = p
-  ? "https://url-shortner-system-design.vercel.app/api/url"
-  : "http://localhost:3000/api/url";
+const Url = LIVE_URL;
+console.log("url server:", Url);
+const baseUrl = `${Url}/api/url`;
+
 let numberOfRequests: { [key: string]: number } = {};
 
 // Reset rate-limiting data every second

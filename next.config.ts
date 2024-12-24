@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    Next_URL: process.env.LIVE_URL,
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,6 @@
 "use client";
+import { LIVE_URL } from "@/constant/constant";
+import { ShortenResponse } from "@/type";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { FaClipboard, FaClipboardCheck } from "react-icons/fa";
@@ -6,16 +8,11 @@ import { FaClipboard, FaClipboardCheck } from "react-icons/fa";
 const UrlComponent = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [shortUrl, setShortUrl] = useState("");
-  const [originalUrl, setOriginalUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
-  const p = true;
-  const url = p
-    ? "https://url-shortner-system-design.vercel.app"
-    : "http://localhost:3000";
+  const [originalUrl, setOriginalUrl] = useState("");
 
-  interface ShortenResponse {
-    shortUrl: string;
-  }
+  const url = LIVE_URL;
+  console.log("url client:", url);
 
   const focusField = (e: KeyboardEvent) => {
     if (e.ctrlKey && e.key === "k") {
