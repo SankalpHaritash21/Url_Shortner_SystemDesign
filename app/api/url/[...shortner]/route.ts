@@ -7,7 +7,10 @@ type UrlData = {
 };
 
 const urlGraph = new Map<string, UrlData>();
-const baseUrl = "https://url-shortner-system-design.vercel.app/api/url"; //"http://localhost:3000";
+const p = true;
+const baseUrl = !p
+  ? "https://url-shortner-system-design.vercel.app/api/url"
+  : "http://localhost:3000/api/url";
 let numberOfRequests: { [key: string]: number } = {};
 
 // Reset rate-limiting data every second
